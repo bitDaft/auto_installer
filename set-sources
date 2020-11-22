@@ -1,0 +1,24 @@
+#/usr/bin/env sh
+
+# This script is to setup the basic environment, programs, applications and configuration as per my normal use case requirements
+# Debian, base installation
+
+
+# update the sources list
+sudo tee /etc/apt/sources.list > /dev/null << EOF
+deb http://deb.debian.org/debian buster main contrib non-free
+deb-src http://deb.debian.org/debian buster main contrib non-free
+
+deb http://deb.debian.org/debian-security buster/updates main contrib non-free
+deb-src http://deb.debian.org/debian-security buster/updates main contrib non-free
+
+deb http://deb.debian.org/debian buster-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+
+deb http://deb.debian.org/debian buster-backports main contrib non-free
+deb-src http://deb.debian.org/debian buster-backports main contrib non-free
+EOF
+
+sudo apt update -qq
+
+exit 0

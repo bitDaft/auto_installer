@@ -1,0 +1,80 @@
+#/usr/bin/env sh
+
+HOME=/home/tausif
+
+sudo apt update -qq
+sudo apt install -y \
+xorg \
+i3 \
+firmware-realtek \
+shellcheck \
+htop \
+vim \
+scrot \
+feh \
+build-essential \
+zsh \
+ranger \
+mesa-utils \
+gdb \
+vlc \
+blender \
+git \
+w3m-img \
+libx11-dev \
+libxft-dev 
+
+#ttf-ancient-fonts \
+#fonts-noto \
+#fonts-symbola \
+#xfonts-unifont \
+#ttf-unifont \
+#ttf-mscorefonts-installer \
+
+
+sudo apt install -y libharfbuzz-dev libdbus-glib-1-2 alsa-utils pulseaudio pavucontrol
+
+mkdir $HOME/repos
+cd $HOME/repos && git clone https://github.com/bitDaft/shcripts.git
+cd $HOME/repos && git clone https://github.com/bitDaft/dotfiles.git
+cd $HOME/repos && git clone https://github.com/bitDaft/st.git
+
+git config --global user.name "Tausif ali"
+git config --global user.email "ajaxhis@tutanota.com"
+sudo chown tausif:tausif $HOME/repos -R
+
+cp -r $HOME/repos/dotfiles/.config $HOME
+cd $HOME/repos/st && sudo make install
+
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/st 100
+
+#cp $HOME/auto_installer/Meslo* /usr/local/share/fonts/
+#cp $HOME/auto_installer/Dank* /usr/local/share/fonts/
+#cp $HOME/auto_installer/Fira* /usr/local/share/fonts/
+sudo cp $HOME/auto_installer/*.ttf /usr/local/share/fonts/
+sudo chown tausif:tausif /usr/local/share/fonts/ -R
+sudo chmod 664 /usr/share/local/fonts/*
+fc-cache -fv
+
+cd $HOME/repos/shcripts && cp .xinitrc $HOME
+cd $HOME/repos/shcripts && cp .zprofile $HOME
+#cd $HOME/repos/shcripts && cp .profile $HOME
+cd $HOME/repos/shcripts && cp sudoers1 /etc/sudoers.d/
+sudo chmod 0440 /etc/sudoers.d/sudoers1
+sudo chown tausif:tausif $HOME -R
+
+sudo chsh -s /usr/bin/zsh
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --skip-chsh" 
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+cd $HOME/repos/shcripts && cp .zshrc $HOME
+cd $HOME/repos/shcripts && cp .profile $HOME
+
+mkdir $HOME/Downloads
+mkdir $HOME/apps
+
+if [ ! -f $HOME/Downloads/firefox.tar.bz2 ]; then
+    wget -O $HOME/Downloads/firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+    tar -xvf $HOME/Downloads/firefox.tar.bz2 -C $HOME/apps/
+fi
+
+sudo chown tausif:tausif $HOME -R

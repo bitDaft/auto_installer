@@ -1,0 +1,6 @@
+#/usr/bin/env sh
+
+HOME=/home/tausif
+
+rm $HOME/.SETUP_SOURCE
+rm $HOME/.SETUP_RESTART

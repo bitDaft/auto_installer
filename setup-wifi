@@ -1,0 +1,9 @@
+#/usr/bin/env sh
+
+# install the kernel and install wifi firmware
+if dpkg-query -W firmware-iwlwifi; then
+    exit 1
+else
+    sudo apt install -t buster-backports linux-image-amd64 firmware-linux firmware-linux-nonfree firmware-iwlwifi -y -qq
+    exit 0
+fi

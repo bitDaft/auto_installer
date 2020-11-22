@@ -1,0 +1,50 @@
+#/usr/bin/env sh
+
+# This script is to setup the basic environment, programs, applications and configuration as per my normal use case requirements
+# Debian, base installation
+echo "$EUID"
+if [ "$EUID" = "0" ]; then 
+    echo "***"
+    echo "*** PLEASE RUN THIS SCRIPT WITH SUDO "
+    echo "***"
+    exit 1
+fi
+
+HOME=/home/tausif
+
+if [ ! -f $HOME/.SETUP_SOURCE ]; then
+    echo "Setting up the source list"
+    if sudo ./set-sources; then
+        touch $HOME/.SETUP_SOURCE
+    fi
+fi
+
+if [ ! -f $HOME/.SETUP_RESTART ]; then
+    echo "Setting up the kernel and wifi firmware"
+    if sudo ./setup-wifi; then
+        touch $HOME/.SETUP_RESTART
+        sudo wpa_passphrase "MP reddy 3F" 9632725347 | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf
+        pwd | awk '{print "cd "$1" && sudo "$1"/install"}' | tee -a $HOME/.profile
+	echo "RESTARTING NOW"
+        sleep 10 && sudo systemctl reboot
+        exit 0
+    fi
+fi
+if ! sudo iwgetid -r; then
+	echo "connect to wifi and try again"
+	echo "connect to wifi and try again"
+	echo "connect to wifi and try again"
+	echo "connect to wifi and try again"
+	echo "connect to wifi and try again"
+fi
+sudo wpa_supplicant -B -iwlp8s0 -c /etc/wpa_supplicant/wpa_supplicant.conf && sudo dhclient wlp8s0
+
+sudo ./setup-programs
+
+sudo ./cleanup
+
+sudo systemctl reboot
+
+
+
+

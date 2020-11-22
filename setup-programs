@@ -18,11 +18,13 @@ ranger \
 mesa-utils \
 gdb \
 vlc \
-blender \
 git \
 w3m-img \
 libx11-dev \
-libxft-dev 
+libxft-dev \
+unzip \
+ttf-unifont \
+ttf-ancient-fonts
 
 #ttf-ancient-fonts \
 #fonts-noto \

@@ -24,7 +24,8 @@ libx11-dev \
 libxft-dev \
 unzip \
 ttf-unifont \
-ttf-ancient-fonts
+ttf-ancient-fonts \
+flameshot
 
 #ttf-ancient-fonts \
 #fonts-noto \
